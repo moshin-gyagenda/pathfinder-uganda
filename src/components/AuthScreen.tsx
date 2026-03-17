@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 interface AuthScreenProps {
@@ -19,15 +19,30 @@ const AuthScreen = ({ onLogin }: AuthScreenProps) => {
 
   return (
     <div className="fixed inset-0 z-30 flex flex-col bg-background">
-      {/* Header */}
-      <div className="gradient-hero pt-14 pb-10 px-8 rounded-b-[2rem]">
-        <div className="flex items-center justify-center mb-6">
-          <img src={logo} alt="CareerPath" className="w-16 h-16" />
+      {/* Header with curved gradient */}
+      <div className="gradient-hero pt-14 pb-12 px-8 rounded-b-[2.5rem] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-4 right-8 w-32 h-32 rounded-full border border-primary-foreground/20" />
+          <div className="absolute -bottom-8 -left-8 w-48 h-48 rounded-full border border-primary-foreground/10" />
         </div>
-        <h1 className="text-2xl font-display font-bold text-primary-foreground text-center">
-          {isLogin ? "Welcome Back" : "Create Account"}
-        </h1>
-        <p className="text-primary-foreground/70 text-center font-body text-sm mt-1">
+        <div className="flex items-center justify-center mb-5 relative z-10">
+          <motion.img
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            src={logo}
+            alt="MyCareerAfrica"
+            className="w-16 h-16"
+          />
+        </div>
+        <motion.h1
+          initial={{ y: 10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="text-2xl font-display font-bold text-primary-foreground text-center"
+        >
+          {isLogin ? "Welcome Back" : "Join MyCareerAfrica"}
+        </motion.h1>
+        <p className="text-primary-foreground/60 text-center font-body text-sm mt-1.5">
           {isLogin ? "Sign in to continue your journey" : "Start your career discovery today"}
         </p>
       </div>
@@ -40,23 +55,30 @@ const AuthScreen = ({ onLogin }: AuthScreenProps) => {
         onSubmit={handleSubmit}
         className="flex-1 px-8 pt-8 flex flex-col"
       >
-        {!isLogin && (
-          <div className="mb-4">
-            <label className="text-xs font-display font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
-              Full Name
-            </label>
-            <div className="relative">
-              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <input
-                type="text"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="Enter your full name"
-                className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-muted border border-border font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-              />
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {!isLogin && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="mb-4 overflow-hidden"
+            >
+              <label className="text-xs font-display font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
+                Full Name
+              </label>
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="Enter your full name"
+                  className="w-full pl-11 pr-4 py-3.5 rounded-xl bg-muted border border-border font-body text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="mb-4">
           <label className="text-xs font-display font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
@@ -103,12 +125,13 @@ const AuthScreen = ({ onLogin }: AuthScreenProps) => {
           </button>
         )}
 
-        <button
+        <motion.button
+          whileTap={{ scale: 0.97 }}
           type="submit"
-          className="w-full py-4 rounded-2xl gradient-gold text-primary-foreground font-display font-semibold text-base shadow-gold transition-transform active:scale-[0.98]"
+          className="w-full py-4 rounded-2xl gradient-gold text-primary-foreground font-display font-semibold text-base shadow-gold"
         >
           {isLogin ? "Sign In" : "Create Account"}
-        </button>
+        </motion.button>
 
         <div className="mt-auto pb-10 text-center">
           <p className="text-muted-foreground font-body text-sm">

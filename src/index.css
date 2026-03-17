@@ -76,6 +76,9 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -109,10 +112,21 @@
     box-shadow: 0 8px 32px -8px hsl(var(--gold) / 0.35);
   }
   .shadow-card {
-    box-shadow: 0 4px 24px -4px hsl(var(--indigo) / 0.08);
+    box-shadow: 0 4px 24px -4px hsl(var(--indigo) / 0.06);
   }
   .glass {
-    background: hsl(0 0% 100% / 0.85);
-    backdrop-filter: blur(12px);
+    background: hsl(0 0% 100% / 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }

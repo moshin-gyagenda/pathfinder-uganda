@@ -16,15 +16,16 @@ interface BottomNavProps {
 
 const BottomNav = ({ active, onNavigate }: BottomNavProps) => {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 glass border-t border-border">
-      <div className="max-w-lg mx-auto flex items-center justify-around py-2 px-4">
+    <div className="fixed bottom-0 left-0 right-0 z-50 glass border-t border-border safe-area-bottom">
+      <div className="max-w-lg mx-auto flex items-center justify-around py-2 px-2">
         {tabs.map((tab) => {
           const isActive = active === tab.key;
           return (
-            <button
+            <motion.button
               key={tab.key}
+              whileTap={{ scale: 0.85 }}
               onClick={() => onNavigate(tab.key)}
-              className="flex flex-col items-center gap-0.5 py-1 px-3 relative"
+              className="flex flex-col items-center gap-0.5 py-1.5 px-4 relative rounded-xl transition-colors"
             >
               {isActive && (
                 <motion.div
@@ -45,7 +46,7 @@ const BottomNav = ({ active, onNavigate }: BottomNavProps) => {
               >
                 {tab.label}
               </span>
-            </button>
+            </motion.button>
           );
         })}
       </div>
